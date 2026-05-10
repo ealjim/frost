@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frost Bank | Account Overview</title>
+
+<style>
+:root {
+  --primary: #02699c;
+  --primary-dark: #00273e;
+  --bg: #f4f8fb;
+  --text: #163042;
+  --muted: #6c7a86;
+  --line: #d8e4ec;
+  --shadow: 0 14px 35px rgba(0, 39, 62, 0.08);
+}
+
+/* BASE */
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
+  color: var(--text);
+}
+
+.page-shell {
+  padding: 24px 24px 100px;
+}
+
+/* HEADER */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+/* NEW LABELS */
+.status-container {
+  display: flex;
+  gap: 12px;
+}
+
+.status-label {
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  min-width: 180px;
+}
+
+.label-fraud {
+  background: #de0a26;
+}
+
+.label-frozen {
+  background: #02699C;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ghost-btn {
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+}
+
+/* HERO */
+.hero {
+  max-width: 1280px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 24px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #00273e;
+}
+
+.bottom-btn {
+  color: white;
+  padding: 16px;
+  text-align: center;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+<div class="page-shell">
+
+<header class="topbar">
+  <div class="brand">
+    <img src="frost logo.png" class="brand-logo">
+    <div>
+      <div>Personal Banking</div>
+      <div class="brand-name">Account Overview</div>
+    </div>
+  </div>
+
+  <!-- NEW LABELS -->
+  <div class="status-container">
+    <div class="status-label label-fraud">Active Fraud Dispute</div>
+    <div class="status-label label-frozen">Credit Card Frozen</div>
+  </div>
+
+  <div class="topbar-actions">
+    <button class="ghost-btn">Messages</button>
+    <button class="ghost-btn">Sign Out</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Relationship summary</h1>
+    <p>Your accounts and balances are shown below.</p>
+  </section>
+</main>
+
+<nav class="bottom-actions">
+  <a class="bottom-btn" href="index.html">Account Statements</a>
+  <a class="bottom-btn" href="transaction.html">Transaction History</a>
+  <a class="bottom-btn" href="#">Forms</a>
+  <a class="bottom-btn" href="#">Schedule Appointment</a>
+</nav>
+
+</div>
+</body>
+</html>
