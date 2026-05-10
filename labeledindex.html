@@ -34,6 +34,33 @@
         color: var(--text);
       }
 
+      /* HEADER STATUS LABELS */
+.status-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.status-label {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label-fraud {
+  background: #de0a26;
+}
+
+.label-frozen {
+  background: #02699c;
+}
+
       .page-shell {
         min-height: 100vh;
         padding: 24px 24px 100px;
@@ -86,14 +113,6 @@
         gap: 10px;
         flex-wrap: wrap;
       }
-
-      .label-fraud {
-  background: #de0a26;
-}
-
-.label-frozen {
-  background: #02699C;
-}
 
       .ghost-btn,
       .text-btn,
@@ -531,12 +550,17 @@
           </div>
         </div>
 
-         <div class="status-container">
-    <div class="status-label label-fraud">Active Fraud Dispute</div>
-    <div class="status-label label-frozen">Credit Card Frozen</div>
-  </div>
 
         <div class="topbar-actions">
+          <!-- STATUS LABELS -->
+<div class="status-container">
+  <div class="status-label label-fraud">
+    Active Fraud Dispute
+  </div>
+  <div class="status-label label-frozen">
+    Credit Card Frozen
+  </div>
+</div>
           <button class="ghost-btn">Messages</button>
           <button class="ghost-btn">Sign Out</button>
         </div>
