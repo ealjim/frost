@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frost Bank | Fraud Report</title>
+    <style>
+      :root {
+        --primary: #02699c;
+        --primary-dark: #00273e;
+        --bg: #f4f8fb;
+        --card: #ffffff;
+        --text: #163042;
+        --muted: #6c7a86;
+        --line: #d8e4ec;
+        --shadow: 0 14px 35px rgba(0, 39, 62, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(2, 105, 156, 0.10), transparent 30%),
+          linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        padding: 24px 24px 100px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        max-width: 1280px;
+        margin: 0 auto 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-logo {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .brand-copy {
+        line-height: 1.1;
+      }
+
+      .brand-kicker {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      .brand-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .topbar-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .ghost-btn,
+      .primary-btn,
+      .secondary-btn {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      }
+
+      .ghost-btn {
+        background: #fff;
+        color: var(--primary-dark);
+        padding: 12px 16px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0, 39, 62, 0.08);
+      }
+
+      .ghost-btn:hover,
+      .primary-btn:hover,
+      .secondary-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .dashboard {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-bottom: 22px;
+      }
+
+      .hero,
+      .panel {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(2, 105, 156, 0.10);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero {
+        border-radius: 30px;
+        padding: 30px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 48px);
+        color: var(--primary-dark);
+        letter-spacing: -0.03em;
+      }
+
+      .hero-text {
+        margin: 12px 0 0;
+        color: var(--muted);
+        max-width: 58ch;
+      }
+
+      .hero-balance {
+        border-radius: 26px;
+        padding: 24px;
+        background: linear-gradient(145deg, var(--primary-dark), #0d4d70);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-label {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        opacity: 0.8;
+      }
+
+      .hero-value {
+        font-size: clamp(28px, 3vw, 40px);
+        font-weight: 800;
+        margin-top: 10px;
+        line-height: 1.15;
+      }
+
+      .hero-subtext {
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      .panel {
+        border-radius: 28px;
+        padding: 24px;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        color: var(--primary-dark);
+        font-size: 22px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px 16px;
+        font: inherit;
+        color: var(--text);
+        background: #fff;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      input[readonly] {
+        background: #f9fcfe;
+        color: #273944;
+      }
+
+      textarea {
+        min-height: 180px;
+        resize: vertical;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+      }
+
+      .secondary-btn,
+      .primary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        padding: 15px 22px;
+        border-radius: 16px;
+        font-weight: 800;
+        min-width: 150px;
+      }
+
+      .secondary-btn {
+        background: #fff;
+        color: var(--primary-dark);
+        border: 1px solid var(--line);
+      }
+
+      .primary-btn {
+        background: linear-gradient(145deg, var(--primary), #0a84bd);
+        color: white;
+        box-shadow: 0 16px 24px rgba(2, 105, 156, 0.18);
+      }
+
+      .helper {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .bottom-actions {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px 18px;
+        background: rgba(0, 39, 62, 0.94);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .bottom-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 15px 12px;
+        border-radius: 16px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .bottom-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      @media (max-width: 1080px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page-shell {
+          padding: 18px 16px 110px;
+        }
+
+        .topbar {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .topbar-actions {
+          width: 100%;
+        }
+
+        .ghost-btn {
+          flex: 1;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bottom-actions {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="frost logo.png" alt="Frost Bank logo" />
+          <div class="brand-copy">
+            <div class="brand-kicker">Personal Banking</div>
+            <div class="brand-name">Fraud Report</div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-btn" type="button">Messages</button>
+          <button class="ghost-btn" type="button">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Suspicious transaction review</p>
+            <h1>Report a fraudulent transaction</h1>
+            <p class="hero-text">
+              Review the transaction details below, then describe why you believe this charge is fraudulent.
+            </p>
+          </div>
+
+          <div class="hero-balance">
+            <div class="hero-label">Selected transaction</div>
+            <div class="hero-value">Scamazon • $726.93</div>
+            <div class="hero-subtext">Internet purchase • Random City, Mexico • 5/10/26</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Transaction details</h2>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="date">Date</label>
+              <input id="date" type="text" value="5/10/26" readonly />
+            </div>
+
+            <div class="field">
+              <label for="merchant">Merchant</label>
+              <input id="merchant" type="text" value="Scamazon" readonly />
+            </div>
+
+            <div class="field">
+              <label for="amount">Amount</label>
+              <input id="amount" type="text" value="$726.93" readonly />
+            </div>
+
+            <div class="field">
+              <label for="description">Description</label>
+              <input id="description" type="text" value="internet" readonly />
+            </div>
+
+            <div class="field full">
+              <label for="location">Location</label>
+              <input id="location" type="text" value="Random City, Mexico" readonly />
+            </div>
+
+            <div class="field full">
+              <label for="dispute">Dispute Details</label>
+              <textarea
+                id="dispute"
+                placeholder="Type the details of the dispute here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="secondary-btn" href="https://ealjim.github.io/frost/transaction.html">Cancel</a>
+            <a class="primary-btn" href="https://ealjim.github.io/frost/labeledindex.html">Submit</a>
+          </div>
+
+          <div class="helper">
+            Review the transaction information above and enter any relevant details before submitting.
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-actions" aria-label="Quick actions">
+        <a class="bottom-btn" href="index.html">Account Summary</a>
+        <a class="bottom-btn" href="transaction.html">Account Statements</a>
+        <a class="bottom-btn" href="#">Forms</a>
+        <a class="bottom-btn" href="#">Schedule Appointment</a>
+      </nav>
+    </div>
+  </body>
+</html>
