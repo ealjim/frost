@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frost Bank | Account Overview</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img
+            class="brand-logo"
+            src="assets/frost%20logo.png"
+            alt="Frost Bank logo"
+          />
+          <div class="brand-copy">
+            <div class="brand-kicker">Personal Banking</div>
+            <div class="brand-name">Account Overview</div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-btn">Messages</button>
+          <button class="ghost-btn">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero">
+          <div>
+            <p class="eyebrow" id="greeting">Good morning, Jon</p>
+            <h1>Relationship summary</h1>
+            <p class="hero-text">
+              A quick view of your linked accounts, balances, and recent activity.
+            </p>
+          </div>
+
+          <div class="hero-balance">
+            <div class="hero-label">Total deposit balances</div>
+            <div class="hero-value">$87,420.11</div>
+            <div class="hero-subtext">Across checking, savings, and money market</div>
+          </div>
+        </section>
+
+        <section class="metrics">
+          <article class="metric-card">
+            <div class="metric-label">Available cash</div>
+            <div class="metric-value">$42,918.36</div>
+            <div class="metric-subtext">Includes checking and savings availability</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Pending transactions</div>
+            <div class="metric-value">$1,248.90</div>
+            <div class="metric-subtext">3 items awaiting settlement</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Upcoming payments</div>
+            <div class="metric-value">$2,150.00</div>
+            <div class="metric-subtext">Due within the next 7 days</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Credit utilization</div>
+            <div class="metric-value">18%</div>
+            <div class="metric-subtext">On your Frost rewards card</div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <div class="left-column">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Linked accounts</h2>
+                <button class="text-btn">View all accounts</button>
+              </div>
+
+              <div class="account-list">
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Checking</div>
+                      <div class="account-name">Everyday Checking •••• 4821</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$24,860.44</div>
+                  <div class="account-meta">
+                    <span>Available: $24,560.44</span>
+                    <span>Last deposit: $2,250.00</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Savings</div>
+                      <div class="account-name">Premier Savings •••• 1098</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$58,143.22</div>
+                  <div class="account-meta">
+                    <span>Interest earned this month: $84.19</span>
+                    <span>Goal progress: 72%</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Credit Card</div>
+                      <div class="account-name">Rewards Card •••• 7742</div>
+                    </div>
+                    <span class="status-pill neutral">Active</span>
+                  </div>
+                  <div class="account-balance negative">-$2,948.19</div>
+                  <div class="account-meta">
+                    <span>Available credit: $7,051.81</span>
+                    <span>Statement closes in 8 days</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Money Market</div>
+                      <div class="account-name">Growth Market •••• 3304</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$4,367.64</div>
+                  <div class="account-meta">
+                    <span>Transfer limit remaining: $3,000</span>
+                    <span>Last transfer: $500.00</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Recent activity</h2>
+                <button class="text-btn">Transaction history</button>
+              </div>
+
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Card purchase • H-E-B</div>
+                    <div class="activity-subtitle">Today • 9:14 AM</div>
+                  </div>
+                  <div class="activity-amount negative">-$82.16</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Direct deposit • Payroll</div>
+                    <div class="activity-subtitle">Yesterday • 7:03 AM</div>
+                  </div>
+                  <div class="activity-amount positive">+$2,250.00</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Transfer to savings</div>
+                    <div class="activity-subtitle">Yesterday • 2:28 PM</div>
+                  </div>
+                  <div class="activity-amount negative">-$500.00</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Card payment received</div>
+                    <div class="activity-subtitle">Jan 12 • 11:40 AM</div>
+                  </div>
+                  <div class="activity-amount positive">+$400.00</div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="right-column">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Account insights</h2>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Upcoming statement</div>
+                <p>
+                  Your credit card statement will be ready soon. Estimated minimum payment:
+                  <strong>$74.00</strong>.
+                </p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Savings goal</div>
+                <p>
+                  You are <strong>72%</strong> toward your vacation goal. A transfer of
+                  <strong>$150</strong> would keep you on track.
+                </p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Need help?</div>
+                <p>
+                  Schedule an appointment to discuss account setup, card services, or a
+                  new savings goal.
+                </p>
+              </div>
+            </section>
+
+            <section class="panel appointment-panel" id="appointment-panel">
+              <div class="panel-header">
+                <h2>Schedule appointment</h2>
+              </div>
+
+              <p class="appointment-copy">
+                Meet with a banker to review account questions, card services, and
+                savings options.
+              </p>
+
+              <button class="primary-btn" id="scheduleBtn">Schedule Appointment</button>
+            </section>
+          </aside>
+        </section>
+      </main>
+
+      <nav class="bottom-actions" aria-label="Quick actions">
+        <button class="bottom-btn" data-target="statements">Account Statements</button>
+        <button class="bottom-btn" data-target="history">Transaction History</button>
+        <button class="bottom-btn" data-target="forms">Forms</button>
+        <button class="bottom-btn" data-target="appointment-panel">Schedule Appointment</button>
+      </nav>
+
+      <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
