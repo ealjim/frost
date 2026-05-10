@@ -1,168 +1,815 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Frost Bank | Account Overview</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frost Bank | Account Overview</title>
+    <style>
+      :root {
+        --primary: #02699c;
+        --primary-dark: #00273e;
+        --bg: #f4f8fb;
+        --card: #ffffff;
+        --text: #163042;
+        --muted: #6c7a86;
+        --line: #d8e4ec;
+        --shadow: 0 14px 35px rgba(0, 39, 62, 0.08);
+        --radius: 22px;
+      }
 
-<style>
-:root {
-  --primary: #02699c;
-  --primary-dark: #00273e;
-  --bg: #f4f8fb;
-  --text: #163042;
-  --muted: #6c7a86;
-  --line: #d8e4ec;
-  --shadow: 0 14px 35px rgba(0, 39, 62, 0.08);
-}
+      * {
+        box-sizing: border-box;
+      }
 
-/* BASE */
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
-  color: var(--text);
-}
+      html {
+        scroll-behavior: smooth;
+      }
 
-.page-shell {
-  padding: 24px 24px 100px;
-}
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(2, 105, 156, 0.10), transparent 30%),
+          linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
+        color: var(--text);
+      }
 
-/* HEADER */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1280px;
-  margin: 0 auto 24px;
-}
+      .page-shell {
+        min-height: 100vh;
+        padding: 24px 24px 100px;
+      }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        max-width: 1280px;
+        margin: 0 auto 24px;
+      }
 
-.brand-logo {
-  width: 64px;
-  height: 64px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 8px;
-}
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
 
-.brand-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary-dark);
-}
+      .brand-logo {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: var(--shadow);
+      }
 
-/* NEW LABELS */
-.status-container {
-  display: flex;
-  gap: 12px;
-}
+      .brand-copy {
+        line-height: 1.1;
+      }
 
-.status-label {
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
-  min-width: 180px;
-}
+      .brand-kicker {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
 
-.label-fraud {
-  background: #de0a26;
-}
+      .brand-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
 
-.label-frozen {
-  background: #02699C;
-}
+      .topbar-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-.topbar-actions {
-  display: flex;
-  gap: 10px;
-}
+      .ghost-btn,
+      .text-btn,
+      .primary-btn,
+      .bottom-btn {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      }
 
-.ghost-btn {
-  background: #fff;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: none;
-}
+      .ghost-btn {
+        background: #fff;
+        color: var(--primary-dark);
+        padding: 12px 16px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0, 39, 62, 0.08);
+      }
 
-/* HERO */
-.hero {
-  max-width: 1280px;
-  margin: auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 24px;
-}
+      .ghost-btn:hover,
+      .text-btn:hover,
+      .primary-btn:hover,
+      .bottom-btn:hover {
+        transform: translateY(-1px);
+      }
 
-.hero h1 {
-  margin: 0;
-  font-size: 36px;
-}
+      .dashboard {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
 
-.bottom-actions {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: #00273e;
-}
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-bottom: 22px;
+      }
 
-.bottom-btn {
-  color: white;
-  padding: 16px;
-  text-align: center;
-  text-decoration: none;
-}
-</style>
-</head>
+      .hero,
+      .panel,
+      .metric-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(2, 105, 156, 0.10);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
 
-<body>
-<div class="page-shell">
+      .hero {
+        border-radius: 30px;
+        padding: 30px;
+      }
 
-<header class="topbar">
-  <div class="brand">
-    <img src="frost logo.png" class="brand-logo">
-    <div>
-      <div>Personal Banking</div>
-      <div class="brand-name">Account Overview</div>
-    </div>
-  </div>
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 15px;
+        font-weight: 700;
+      }
 
-  <!-- NEW LABELS -->
-  <div class="status-container">
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 48px);
+        color: var(--primary-dark);
+        letter-spacing: -0.03em;
+      }
+
+      .hero-text {
+        margin: 12px 0 0;
+        color: var(--muted);
+        max-width: 58ch;
+      }
+
+      .hero-balance {
+        border-radius: 26px;
+        padding: 24px;
+        background: linear-gradient(145deg, var(--primary-dark), #0d4d70);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-label {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        opacity: 0.8;
+      }
+
+      .hero-value {
+        font-size: clamp(34px, 4vw, 54px);
+        font-weight: 800;
+        margin-top: 10px;
+        line-height: 1;
+      }
+
+      .hero-subtext {
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+
+      .metric-card {
+        border-radius: 22px;
+        padding: 20px;
+      }
+
+      .metric-label {
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+
+      .metric-value {
+        color: var(--primary-dark);
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .metric-subtext {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.75fr;
+        gap: 22px;
+        align-items: start;
+      }
+
+      .left-column,
+      .right-column {
+        display: grid;
+        gap: 22px;
+      }
+
+      .panel {
+        border-radius: 28px;
+        padding: 24px;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        color: var(--primary-dark);
+        font-size: 22px;
+      }
+
+      .text-btn {
+        background: transparent;
+        color: var(--primary);
+        padding: 0;
+        font-weight: 700;
+      }
+
+      .account-list,
+      .activity-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .account-card,
+      .insight-card {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: linear-gradient(180deg, #fff 0%, #fbfdff 100%);
+      }
+
+      .account-card {
+        padding: 18px;
+      }
+
+      .account-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: start;
+        margin-bottom: 14px;
+      }
+
+      .account-type {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .account-name {
+        margin-top: 4px;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .status-pill {
+        white-space: nowrap;
+        padding: 7px 11px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .status-pill.positive {
+        color: #0f7a43;
+        background: rgba(15, 122, 67, 0.10);
+      }
+
+      .status-pill.neutral {
+        color: #0d4d70;
+        background: rgba(2, 105, 156, 0.10);
+      }
+
+      .account-balance {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--primary-dark);
+      }
+
+      .account-balance.negative {
+        color: #a83d31;
+      }
+
+      .account-meta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .activity-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .activity-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .activity-title {
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .activity-subtitle {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .activity-amount {
+        font-weight: 800;
+        font-size: 16px;
+        white-space: nowrap;
+      }
+
+      .activity-amount.positive {
+        color: #0f7a43;
+      }
+
+      .activity-amount.negative {
+        color: #a83d31;
+      }
+
+      .right-column .panel {
+        position: relative;
+      }
+
+      .insight-card {
+        padding: 18px;
+        margin-bottom: 14px;
+      }
+
+      .insight-card:last-child {
+        margin-bottom: 0;
+      }
+
+      .insight-title {
+        font-weight: 800;
+        color: var(--primary-dark);
+        margin-bottom: 8px;
+      }
+
+      .insight-card p,
+      .appointment-copy {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .appointment-panel {
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbfe 100%);
+      }
+
+      .primary-btn {
+        margin-top: 16px;
+        width: 100%;
+        background: linear-gradient(145deg, var(--primary), #0a84bd);
+        color: white;
+        padding: 16px 18px;
+        border-radius: 18px;
+        font-weight: 800;
+        box-shadow: 0 16px 24px rgba(2, 105, 156, 0.18);
+      }
+
+      .bottom-actions {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px 18px;
+        background: rgba(0, 39, 62, 0.94);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .bottom-btn {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 15px 12px;
+        border-radius: 16px;
+        font-weight: 700;
+      }
+
+      .bottom-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 86px;
+        min-width: 240px;
+        max-width: 360px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--primary-dark);
+        color: #fff;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1080px) {
+        .metrics {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .hero,
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page-shell {
+          padding: 18px 16px 110px;
+        }
+
+        .topbar {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .topbar-actions {
+          width: 100%;
+        }
+
+        .ghost-btn {
+          flex: 1;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .account-top,
+        .activity-item,
+        .panel-header {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .bottom-actions {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="frost logo.png" alt="Frost Bank logo" />
+          <div class="brand-copy">
+            <div class="brand-kicker">Personal Banking</div>
+            <div class="brand-name">Account Overview</div>
+          </div>
+        </div>
+
+         <div class="status-container">
     <div class="status-label label-fraud">Active Fraud Dispute</div>
     <div class="status-label label-frozen">Credit Card Frozen</div>
   </div>
 
-  <div class="topbar-actions">
-    <button class="ghost-btn">Messages</button>
-    <button class="ghost-btn">Sign Out</button>
-  </div>
-</header>
+        <div class="topbar-actions">
+          <button class="ghost-btn">Messages</button>
+          <button class="ghost-btn">Sign Out</button>
+        </div>
+      </header>
 
-<main>
-  <section class="hero">
-    <h1>Relationship summary</h1>
-    <p>Your accounts and balances are shown below.</p>
-  </section>
-</main>
+      <main class="dashboard">
+        <section class="hero">
+          <div>
+            <p class="eyebrow" id="greeting">Good morning, Jon</p>
+            <h1>Relationship summary</h1>
+            <p class="hero-text">
+              A quick view of your linked accounts, balances, and recent activity.
+            </p>
+          </div>
 
-<nav class="bottom-actions">
-  <a class="bottom-btn" href="index.html">Account Statements</a>
-  <a class="bottom-btn" href="transaction.html">Transaction History</a>
-  <a class="bottom-btn" href="#">Forms</a>
-  <a class="bottom-btn" href="#">Schedule Appointment</a>
-</nav>
+          <div class="hero-balance">
+            <div class="hero-label">Total deposit balances</div>
+            <div class="hero-value">$87,420.11</div>
+            <div class="hero-subtext">Across checking, savings, and money market</div>
+          </div>
+        </section>
 
-</div>
-</body>
+        <section class="metrics">
+          <article class="metric-card">
+            <div class="metric-label">Available cash</div>
+            <div class="metric-value">$42,918.36</div>
+            <div class="metric-subtext">Includes checking and savings availability</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Pending transactions</div>
+            <div class="metric-value">$1,248.90</div>
+            <div class="metric-subtext">3 items awaiting settlement</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Upcoming payments</div>
+            <div class="metric-value">$2,150.00</div>
+            <div class="metric-subtext">Due within the next 7 days</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">Credit utilization</div>
+            <div class="metric-value">18%</div>
+            <div class="metric-subtext">On your Frost rewards card</div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <div class="left-column">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Linked accounts</h2>
+                <button class="text-btn">View all accounts</button>
+              </div>
+
+              <div class="account-list">
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Checking</div>
+                      <div class="account-name">Everyday Checking •••• 4821</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$24,860.44</div>
+                  <div class="account-meta">
+                    <span>Available: $24,560.44</span>
+                    <span>Last deposit: $2,250.00</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Savings</div>
+                      <div class="account-name">Premier Savings •••• 1098</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$58,143.22</div>
+                  <div class="account-meta">
+                    <span>Interest earned this month: $84.19</span>
+                    <span>Goal progress: 72%</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Credit Card</div>
+                      <div class="account-name">Rewards Card •••• 7742</div>
+                    </div>
+                    <span class="status-pill neutral">Active</span>
+                  </div>
+                  <div class="account-balance negative">-$2,948.19</div>
+                  <div class="account-meta">
+                    <span>Available credit: $7,051.81</span>
+                    <span>Statement closes in 8 days</span>
+                  </div>
+                </article>
+
+                <article class="account-card">
+                  <div class="account-top">
+                    <div>
+                      <div class="account-type">Money Market</div>
+                      <div class="account-name">Growth Market •••• 3304</div>
+                    </div>
+                    <span class="status-pill positive">Open</span>
+                  </div>
+                  <div class="account-balance">$4,367.64</div>
+                  <div class="account-meta">
+                    <span>Transfer limit remaining: $3,000</span>
+                    <span>Last transfer: $500.00</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Recent activity</h2>
+                <button class="text-btn">Transaction history</button>
+              </div>
+
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Card purchase • H-E-B</div>
+                    <div class="activity-subtitle">Today • 9:14 AM</div>
+                  </div>
+                  <div class="activity-amount negative">-$82.16</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Direct deposit • Payroll</div>
+                    <div class="activity-subtitle">Yesterday • 7:03 AM</div>
+                  </div>
+                  <div class="activity-amount positive">+$2,250.00</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Transfer to savings</div>
+                    <div class="activity-subtitle">Yesterday • 2:28 PM</div>
+                  </div>
+                  <div class="activity-amount negative">-$500.00</div>
+                </div>
+
+                <div class="activity-item">
+                  <div>
+                    <div class="activity-title">Card payment received</div>
+                    <div class="activity-subtitle">Jan 12 • 11:40 AM</div>
+                  </div>
+                  <div class="activity-amount positive">+$400.00</div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="right-column">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Account insights</h2>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Upcoming statement</div>
+                <p>
+                  Your credit card statement will be ready soon. Estimated minimum payment:
+                  <strong>$74.00</strong>.
+                </p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Savings goal</div>
+                <p>
+                  You are <strong>72%</strong> toward your vacation goal. A transfer of
+                  <strong>$150</strong> would keep you on track.
+                </p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-title">Need help?</div>
+                <p>
+                  Schedule an appointment to discuss account setup, card services, or a
+                  new savings goal.
+                </p>
+              </div>
+            </section>
+
+            <section class="panel appointment-panel" id="appointment-panel">
+              <div class="panel-header">
+                <h2>Schedule appointment</h2>
+              </div>
+
+              <p class="appointment-copy">
+                Meet with a banker to review account questions, card services, and
+                savings options.
+              </p>
+
+              <button class="primary-btn" id="scheduleBtn">Schedule Appointment</button>
+            </section>
+          </aside>
+        </section>
+      </main>
+
+      <nav class="bottom-actions" aria-label="Quick actions">
+        <button class="bottom-btn" data-target="statements">Account Statements</button>
+        <a class="bottom-btn" href="https://ealjim.github.io/frost/transaction.html">
+  Transaction History
+</a>
+        <button class="bottom-btn" data-target="forms">Forms</button>
+        <button class="bottom-btn" data-target="appointment-panel">Schedule Appointment</button>
+      </nav>
+
+      <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <script>
+      const greetingEl = document.getElementById("greeting");
+      const toastEl = document.getElementById("toast");
+      const scheduleBtn = document.getElementById("scheduleBtn");
+      const bottomButtons = document.querySelectorAll(".bottom-btn");
+
+      function setGreeting() {
+        const hour = new Date().getHours();
+        let greeting = "Good morning, Jon";
+
+        if (hour >= 12 && hour < 17) {
+          greeting = "Good afternoon, Jon";
+        } else if (hour >= 17) {
+          greeting = "Good evening, Jon";
+        }
+
+        greetingEl.textContent = greeting;
+      }
+
+      function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.add("show");
+
+        window.clearTimeout(window.toastTimer);
+        window.toastTimer = window.setTimeout(() => {
+          toastEl.classList.remove("show");
+        }, 2400);
+      }
+
+      setGreeting();
+
+      scheduleBtn.addEventListener("click", () => {
+        showToast("Appointment request started. A banker will contact you shortly.");
+        document.getElementById("appointment-panel").scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      bottomButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.target;
+
+          if (target === "appointment-panel") {
+            document.getElementById(target).scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            showToast("Opening appointment section.");
+            return;
+          }
+
+          if (target === "statements") {
+            showToast("Account statements opened.");
+          } else if (target === "history") {
+            showToast("Transaction history opened.");
+          } else if (target === "forms") {
+            showToast("Forms section opened.");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
