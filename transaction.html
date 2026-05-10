@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frost Bank | Transaction History</title>
+    <style>
+      :root {
+        --primary: #02699c;
+        --primary-dark: #00273e;
+        --bg: #f4f8fb;
+        --card: #ffffff;
+        --text: #163042;
+        --muted: #6c7a86;
+        --line: #d8e4ec;
+        --shadow: 0 14px 35px rgba(0, 39, 62, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(2, 105, 156, 0.10), transparent 30%),
+          linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        padding: 24px 24px 100px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        max-width: 1280px;
+        margin: 0 auto 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-logo {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .brand-copy {
+        line-height: 1.1;
+      }
+
+      .brand-kicker {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      .brand-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .topbar-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .ghost-btn,
+      .text-btn,
+      .primary-btn,
+      .bottom-btn,
+      .flag-btn {
+        border: 0;
+        cursor: pointer;
+        font: inherit;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      }
+
+      .ghost-btn {
+        background: #fff;
+        color: var(--primary-dark);
+        padding: 12px 16px;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0, 39, 62, 0.08);
+      }
+
+      .ghost-btn:hover,
+      .text-btn:hover,
+      .primary-btn:hover,
+      .bottom-btn:hover,
+      .flag-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .dashboard {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.9fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-bottom: 22px;
+      }
+
+      .hero,
+      .panel {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(2, 105, 156, 0.10);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero {
+        border-radius: 30px;
+        padding: 30px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 48px);
+        color: var(--primary-dark);
+        letter-spacing: -0.03em;
+      }
+
+      .hero-text {
+        margin: 12px 0 0;
+        color: var(--muted);
+        max-width: 58ch;
+      }
+
+      .hero-balance {
+        border-radius: 26px;
+        padding: 24px;
+        background: linear-gradient(145deg, var(--primary-dark), #0d4d70);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-label {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        opacity: 0.8;
+      }
+
+      .hero-value {
+        font-size: clamp(34px, 4vw, 54px);
+        font-weight: 800;
+        margin-top: 10px;
+        line-height: 1;
+      }
+
+      .hero-subtext {
+        margin-top: 10px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      .panel {
+        border-radius: 28px;
+        padding: 24px;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        color: var(--primary-dark);
+        font-size: 22px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 980px;
+      }
+
+      thead th {
+        text-align: left;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        padding: 14px 12px;
+        border-bottom: 2px solid var(--line);
+        background: rgba(2, 105, 156, 0.03);
+      }
+
+      tbody td {
+        padding: 16px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+        font-size: 15px;
+      }
+
+      tbody tr:hover {
+        background: rgba(2, 105, 156, 0.035);
+      }
+
+      .amount {
+        font-weight: 800;
+        color: var(--primary-dark);
+        white-space: nowrap;
+      }
+
+      .amount.large {
+        color: #a83d31;
+      }
+
+      .merchant {
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .description,
+      .location,
+      .date {
+        color: var(--text);
+      }
+
+      .flag-cell {
+        width: 92px;
+        text-align: center;
+      }
+
+      .flag-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgba(168, 61, 49, 0.18);
+        background: rgba(168, 61, 49, 0.08);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #b43c32;
+        box-shadow: 0 8px 18px rgba(168, 61, 49, 0.08);
+      }
+
+      .flag-btn span {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .table-note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .bottom-actions {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px 18px;
+        background: rgba(0, 39, 62, 0.94);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .bottom-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 15px 12px;
+        border-radius: 16px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .bottom-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 86px;
+        min-width: 240px;
+        max-width: 360px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--primary-dark);
+        color: #fff;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1080px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page-shell {
+          padding: 18px 16px 110px;
+        }
+
+        .topbar {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .topbar-actions {
+          width: 100%;
+        }
+
+        .ghost-btn {
+          flex: 1;
+        }
+
+        .bottom-actions {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="frost logo.png" alt="Frost Bank logo" />
+          <div class="brand-copy">
+            <div class="brand-kicker">Personal Banking</div>
+            <div class="brand-name">Transaction History</div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-btn" type="button">Messages</button>
+          <button class="ghost-btn" type="button">Sign Out</button>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Recent account activity</p>
+            <h1>Transaction history</h1>
+            <p class="hero-text">
+              Review recent transactions and flag anything that looks unfamiliar.
+            </p>
+          </div>
+
+          <div class="hero-balance">
+            <div class="hero-label">Selected account</div>
+            <div class="hero-value">Checking •••• 4821</div>
+            <div class="hero-subtext">10 recent transactions shown in descending order</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Transactions</h2>
+            <button class="text-btn" type="button">Download history</button>
+          </div>
+
+          <div class="table-wrap">
+            <table aria-label="Transaction history">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Merchant</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Location</th>
+                  <th>Report</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="date">5/11/26</td>
+                  <td class="merchant">Lone Star Pharmacy</td>
+                  <td class="amount">-$24.38</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Austin, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/11/26</td>
+                  <td class="merchant">Bluebonnet Fuel</td>
+                  <td class="amount">-$48.17</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">San Antonio, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/11/26</td>
+                  <td class="merchant">Baker Street Books</td>
+                  <td class="amount">-$18.92</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Dallas, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/10/26</td>
+                  <td class="merchant">Scamazon</td>
+                  <td class="amount large">-$726.93</td>
+                  <td class="description">internet</td>
+                  <td class="location">Random City, Mexico</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/10/26</td>
+                  <td class="merchant">Trinity Grocery</td>
+                  <td class="amount">-$92.44</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Houston, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/10/26</td>
+                  <td class="merchant">Austin Coffee Works</td>
+                  <td class="amount">-$11.75</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Austin, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/10/26</td>
+                  <td class="merchant">Hill Country Utilities</td>
+                  <td class="amount">-$143.28</td>
+                  <td class="description">Internet</td>
+                  <td class="location">San Marcos, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/09/26</td>
+                  <td class="merchant">Riverwalk Cinema</td>
+                  <td class="amount">-$37.60</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">San Antonio, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/09/26</td>
+                  <td class="merchant">Cedar Park Market</td>
+                  <td class="amount">-$64.11</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Cedar Park, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="date">5/09/26</td>
+                  <td class="merchant">South Texas Hardware</td>
+                  <td class="amount">-$88.53</td>
+                  <td class="description">Point of Sale (POS)</td>
+                  <td class="location">Round Rock, TX</td>
+                  <td class="flag-cell">
+                    <button class="flag-btn" type="button" data-url="fraud-report.html" aria-label="Report transaction">
+                      <span>🚩</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-note">
+            Use the red flag button to report a suspicious transaction.
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-actions" aria-label="Quick actions">
+        <a class="bottom-btn" href="index.html">Account Summary</a>
+        <a class="bottom-btn" href="transaction.html">Transaction History</a>
+        <a class="bottom-btn" href="#">Forms</a>
+        <a class="bottom-btn" href="#">Schedule Appointment</a>
+      </nav>
+
+      <div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <script>
+      const toastEl = document.getElementById("toast");
+      const flagButtons = document.querySelectorAll(".flag-btn");
+
+      function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.add("show");
+
+        window.clearTimeout(window.toastTimer);
+        window.toastTimer = window.setTimeout(() => {
+          toastEl.classList.remove("show");
+        }, 1800);
+      }
+
+      flagButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const url = button.dataset.url || "fraud-report.html";
+          window.location.href = url;
+        });
+      });
+    </script>
+  </body>
+</html>
